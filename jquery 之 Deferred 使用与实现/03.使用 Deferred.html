@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>deffer</title>
+</head>
+<body>
+    <!-- dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <!-- code -->
+    <h3>在 jQuery 中，甚至可以提供两个主题同时被观察, 需要注意的是，要等两个主题都触发之后，
+        才会真正触发，每个观察者一次得到这两个主题，所以参数变成了 2 个。</h3>
+    <script>
+        // 定义主题
+        var subjectAlice = (function(){
+            var dfd = $.Deferred();
+
+            var task = function(){
+                dfd.resolve("Alice");
+            }
+
+            setTimeout(task, 3000);
+
+            return dfd.promise()
+        })();
+
+        
+        var subjectTom = (function(){
+            var dfd = $.Deferred();
+
+            var task = function(){
+                dfd.resolve("Tom");
+            }
+
+            setTimeout(task, 3000);
+
+            return dfd.promise()
+        })();
+
+        // 两个观察者
+        var fn1 = function(content1, content2){
+            console.log("fn1: " + content1 );
+            console.log("fn1: " + content2 );
+        }
+
+        var fn2 = function(content1, content2){
+            console.log("fn2: " + content1 );
+            console.log("fn2: " + content2 );
+        }
+
+        // 注册观察者
+        $.when(subjectAlice, subjectTom)
+        .done(fn1)
+        .done(fn2)
+    </script>
+</body>
+</html>

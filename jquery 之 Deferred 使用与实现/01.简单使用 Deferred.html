@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>deffer</title>
+</head>
+<body>
+    <!-- dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <!-- code -->
+    <h3>需要说明的是，许多事件仅仅触发一次，比如 ready 事件，ajax 的请求处理等等，这种情况下，使用 Deferred 就非常方便了。</h3>
+    <script>
+        // 定义主题
+        var subject = (function(){
+            var dfd = $.Deferred();
+            
+            return dfd;
+        })();
+
+        // 两个观察者
+        var fn1 = function(content){
+            console.log("fn1: " + content );
+        }
+
+        var fn2 = function(content){
+            console.log("fn2: " + content );
+        }
+
+        // 注册观察者
+        $.when( subject )
+        .done( fn1 )
+        .done( fn2 );
+
+        // 发布内容
+        subject.resolve("Alice");    
+    </script>
+</body>
+</html>

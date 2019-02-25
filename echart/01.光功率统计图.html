@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>光功率统计图</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #opticsPower {
+            width: 1000px;
+            height: 600px;
+            margin: 0 auto;
+            border: 1px solid #cccccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="opticsPower"></div>
+    <!-- dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script src="./echarts/dist/echarts.min.js"></script>
+    <script>
+        var option = null;
+
+        barChart()
+
+        function barChart() {
+            var dom = document.getElementById("opticsPower");
+            var myChart = echarts.init(dom);
+            var app = {};
+            app.title = '堆叠柱状图';
+
+            option = {
+                color: ["#1f5cea", "#40ca7f"],
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: false },
+                        // magicType: { show: true, type: ['line', 'bar'] },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                dataZoom: [
+                    {
+                        show: true,//显示x轴滚动条
+                        start: 0,
+                        end: 100,
+                        top: '94%'
+                    },
+                    {
+                        type: 'inside',
+                        start: 94,
+                        end: 100
+                    },
+                    {
+                        show: false, //显示y轴滚动条
+                        yAxisIndex: 0,
+                        filterMode: 'empty',
+                        width: 30,
+                        height: '80%',
+                        showDataShadow: false,
+                        left: '93%'
+                    }
+                ],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                legend: {
+                    itemGap: 5,
+                    data: ['Rx', 'Tx']
+                    // data: ['直接访问', '邮件营销']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '15%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        axisLabel: {
+                            show: true,
+                            rotate: -45,
+                            interval: 0,
+                            fontSize: 12,
+                            formatter: function (value) {
+                                // return value
+                                return value.split('/')[0] + '/' + '\n' + value.split('/')[1]
+                            }
+                        },
+                        data: []
+                        // data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [{
+                    name: 'Rx',
+                    type: 'bar',
+                    data: []
+                }, {
+                    name: "Tx",
+                    type: 'bar',
+                    data: []
+                }]
+            };
+
+            var url = './optical.json'
+            $.ajax(url, {
+                method: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+
+                    for (k in data) {
+                        // console.log(createDate[k]["Rx"]);
+                        if (!data[k]["AZRx"] && !data[k]["AZTx"]) {
+                            continue
+                        }
+                        option.xAxis[0].data.push(k)
+                        option.series[0].data.push(data[k]["AZRx"] || null)
+                        option.series[1].data.push(data[k]["AZTx"] || null)
+                    }
+                    ; if (option && typeof option === "object") {
+                        myChart.setOption(option, true);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            })
+        }
+
+        function setData() {
+            var data = {
+                "port1": {
+                    "Rx": 1.0,
+                    "Tx": 2.0
+                }
+            }
+            var createDate = function () {
+                var port = 'port'
+                var data = {};
+                for (var i = 1; i < 100; i++) {
+                    data[port + i] = { "Rx": random(), "Tx": random() }
+                }
+                return data;
+            }
+            console.log(createDate());
+            createDate = createDate()
+            console.log(option);
+
+            for (k in createDate) {
+                // console.log(createDate[k]["Rx"]);
+                option.xAxis[0].data.push(k)
+                option.series[0].data.push(createDate[k]["Rx"])
+                option.series[1].data.push(createDate[k]["Tx"])
+
+            }
+
+            console.log(option);
+
+            function random(number) {
+                return parseInt(Math.random() * (number ? number : 100))
+            }
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css" media="screen">
+    *{
+        margin :0;
+        padding :0;
+        font : normal 12px/17px Arial;
+    }
+    .msg{
+        width :300px;
+        margin : 100px;
+    }
+    .msg_caption{
+        width :100%;
+        overflow : hidden;
+        margin-botton : 1px;
+    }
+    .msg_caption span{
+        display : block;
+        float : left;
+        margin :0 2px;
+        padding :4px 10px;
+        background :#898989;
+        cursor : pointer;
+        color : white;
+    }
+    .msg textarea{
+        width :300px;
+        height : 80px 100%;
+        border :1px solid #000;
+    }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    $(function(){
+            var $comment = $("#comment");
+            $('.bigger').click(function(){//绑定扩大按钮
+                if(!$comment.is(":animated")){//判断对象是否处于动画状态,不是才执行里面代码
+                    if($comment.height()<500){
+                        $comment.animate({
+                            height : "+=50"
+                        },1000);//重新设置高度,在原来的基础上+50
+                    }
+                }
+                });
+            $('.smaller').click(function(){//绑定缩小按钮
+                if(!$comment.is(":animated")){//判断对象是否处于动画状态,不是才执行里面代码
+                    if($comment.height()>50){
+                        $comment.animate({
+                            height : "-=50"
+                        },1000);//重新设置高度,在原来的基础上-50
+                    }
+                }
+                });
+            })
+    </script>
+</head>
+<body>
+    <form action="" method="post">
+    <div class="msg">
+        <div class="msg_caption">
+            <span class="bigger" >放大</span>
+            <span class="smaller" >缩小</span>
+        </div>
+        <div>
+            <textarea id="comment" rows="8" cols="20">C/S之间通过任意的协议通信，一般要求有特定的客户端。比如QQ就是C/S模式，你的桌面上的QQ就是腾讯公司的特定的客户端，而服务器就是腾讯的服务器。再比如你看的网络电视也是如此，比如你的桌面上的iqiyi、视频软件等，这些软件都是C/S模式的，他们要求在用户有特定的客户端(Socket)。而B/S模式是靠应用层的http协议进行通信的（当然也要靠底层的好多协议支持），一般不需要特定的客户端，而是需要有统一规范的客户端，那就是你的浏览器！Web页就是B/S 模式，也就是说咱们说的网站就是B/S模式。 </textarea>
+        </div>
+    </div>
+</form>
+</body>
+</html>

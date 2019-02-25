@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+* { margin:0; padding:0; }
+div.centent {
+   float:left;
+   text-align: center;
+   margin: 10px;
+}
+span { 
+    display:block; 
+    margin:2px 2px;
+    padding:4px 10px; 
+    background:#898989;
+    cursor:pointer;
+    font-size:12px;
+    color:white;
+}
+</style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    $(function(){
+            //移动到右边
+            $("#add").click(function(){
+                //获取选中的项,删除然后再移动到右边,这里是选择移动;
+                $('#select1 option:selected').appendTo('#select2');
+                });
+            //移动到左边
+            $("#remove").click(function(){
+                $('#select2 option:selected').appendTo('#select1');
+                })
+            //全部到右边
+            $("#add_all").click(function(){
+                $('#select1 option').appendTo('#select2');
+                })
+            //全部到左边
+            $("#remove_all").click(function(){
+                $('#select2 option').appendTo('#select1');
+                })
+            //双击选项
+            $('#select1').dblclick(function(){
+                //这里先定位#select1这个大的选择框,然后定位到里面的被选择的元素组陈的集合
+                    //this就是表示这个集合,当我们按Ctrl或者shift的时候,我们操作的就是这个集合
+                    //$("option:selected",this).appendTo("#select2");
+                $("option:selected",this).appendTo("#select2");
+                })
+            //双击选项
+            $('#select2').dblclick(function(){
+                $("option:selected",this).appendTo("#select1");
+                })
+            });
+    </script>
+</head>
+<body>
+    <div class="centent">
+        <select multiple="multiple" id="select1" style="width:100px;height:160px;">
+            <option value="1">选项1</option>
+            <option value="2">选项2</option>
+            <option value="3">选项3</option>
+            <option value="4">选项4</option>
+            <option value="5">选项5</option>
+            <option value="6">选项6</option>
+            <option value="7">选项7</option>
+            <option value="1">选项1</option>
+            <option value="2">选项2</option>
+            <option value="3">选项3</option>
+            <option value="4">选项4</option>
+            <option value="5">选项5</option>
+            <option value="6">选项6</option>
+            <option value="7">选项7</option>
+            <option value="1">选项1</option>
+            <option value="2">选项2</option>
+            <option value="3">选项3</option>
+            <option value="4">选项4</option>
+            <option value="5">选项5</option>
+            <option value="6">选项6</option>
+            <option value="7">选项7</option>
+            <option value="1">选项1</option>
+            <option value="2">选项2</option>
+            <option value="3">选项3</option>
+            <option value="4">选项4</option>
+            <option value="5">选项5</option>
+            <option value="6">选项6</option>
+            <option value="7">选项7</option>
+        </select>
+        <div>
+            <span id="add" >选中添加到右边&gt;&gt;</span>
+            <span id="add_all" >全部添加到右边&gt;&gt;</span>
+        </div>
+    </div>
+
+    <div class="centent">
+        <select multiple="multiple" id="select2" style="width: 100px;height:160px;">
+            <option value="8">选项8</option>
+        </select>
+        <div>
+            <span id="remove">&lt;&lt;选中删除到左边</span>
+            <span id="remove_all">&lt;&lt;全部删除到左边</span>
+        </div>
+    </div>
+</body>
+</html>

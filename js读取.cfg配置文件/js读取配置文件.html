@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div>
+        <input type="file" id="files" style="display: none" onchange="fileImport();">
+        <input type="button" id="fileImport" value="导入">
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script>
+        // 1.
+        //点击导入按钮,使files触发点击事件,然后完成读取文件的操作
+        // $("#fileImport").click(function () {
+        //     $("#files").click();
+        // })
+        // function fileImport() {
+        //     //获取读取我文件的File对象
+        //     var selectedFile = document.getElementById('files').files[0];
+        //     var name = selectedFile.name;//读取选中文件的文件名
+        //     var size = selectedFile.size;//读取选中文件的大小
+        //     console.log("文件名:"+name+"大小:"+size);
+
+        //     var reader = new FileReader();//这是核心,读取操作就是由它完成.
+        //     reader.readAsText(selectedFile);//读取文件的内容,也可以读取文件的URL
+        //     reader.onload = function () {
+        //         //当读取完成后回调这个函数,然后此时文件的内容存储到了result中,直接操作即可
+        //         console.log(this.result);
+        //     }
+        // }
+
+
+        // 2.
+        // function load(name) {
+        //     let xhr = new XMLHttpRequest(),
+        //         okStatus = document.location.protocol === "file:" ? 0 : 200;
+        //     xhr.open('GET', name, false);
+        //     xhr.overrideMimeType("json/html;charset=utf-8");//默认为utf-8
+        //     // xhr.overrideMimeType("text/html;charset=utf-8");//默认为utf-8
+        //     xhr.send(null);
+        //     return xhr.status === okStatus ? xhr.response : null;
+        // }
+
+        // var text = load("System.cfg");
+        // test = JSON.stringify(text)
+        // console.log(text);
+
+        // text = 
+        //     "[plugin_page_search]"+
+        //     "wholeword=0"+
+        //     "matchcase=1"+
+        //     "hightlight=1"+
+        //     "total=1"+
+        //     "[data]"+
+        //     "up=85"+
+        //     "down=5";
+
+        // function getINI(item, key) {
+        //     new RegExp("\\[" + item + "\\](.+)").exec(text);
+        //     var str = RegExp.$1;
+        //     // var reg2=/(\w+)=(\d+)/g;   //网上大部分代码都没有这个g，导致匹配第二项时失败，/g匹配全文  
+        //     var reg2 = /(\w+)[ ]*=[ ]*(\d+)/g;
+        //     //要是=号前后有多余的空格，此时reg2=/(\w+)[ ]*=[ ]*(\d+)/g;
+        //     var keyValue = {};
+        //     str.replace(reg2, function (a, b, c) {
+        //         keyValue[b] = c;
+        //     });
+        //     return keyValue[key];
+        // }
+        // // var rest_port = getINI('plugin_page_search', 'wholeword')
+        // var rest_port = getINI('DB', 'db')
+        // console.log(rest_port)
+
+
+        // 3.
+        // var fso = new ActiveXObject("Scripting.FileSystemObject");
+        // var f = fso.OpenTextFile("System.cfg",1);
+        // var s = "";
+        // while (!f.AtEndOfStream)
+        // {
+        // s+= f.ReadLine();
+        // }
+        // f.Close();
+
+
+        // 4.
+        // function load(name) {
+        //     let xhr = new XMLHttpRequest(),
+        //         okStatus = document.location.protocol === "file:" ? 0 : 200;
+        //     xhr.open('GET', name, false);
+        //     xhr.overrideMimeType("json/html;charset=utf-8");//默认为utf-8
+        //     // xhr.overrideMimeType("text/html;charset=utf-8");//默认为utf-8
+        //     xhr.send(null);
+        //     return xhr.status === okStatus ? xhr.response : null;
+        // }
+
+        // var text = load("System.cfg");
+        // test = JSON.stringify(text)
+        // console.log(text);
+
+
+        // var myObj = createObj(text);
+        // alert(myObj.rest_ip + ":" + myObj.rest_port)
+        // function createObj(text) {
+        //     // 去掉换行符↵
+        //     text = text.replace(/[\r\n]/g, " "); 
+        //     console.log(text);
+        //     // 查询 [DB] [REST] [OMS] 的索引
+        //     var index_DB = text.search(/\[DB\]/g);
+        //     console.log(index_DB)
+        //     var index_REST = text.search(/\[REST\]/);
+        //     console.log(index_REST)
+        //     var index_OMS = text.search(/\[OMS\]/);
+        //     console.log(index_OMS)
+        //     var len_DB = '[DB]'.length;
+        //     var len_REST = '[REST]'.length;
+        //     var len_OMS = '[OMS]'.length;
+
+
+        //     console.log(text.substring(index_DB, index_DB + '[DB]'.length))
+        //     console.log(text.substring(index_REST, index_REST + '[TEST]'.length))
+        //     console.log(text.substring(index_OMS, index_OMS + '[OMS]'.length))
+
+        //     console.log("===========")
+
+        //     console.log(text.substring('[DB]'.length, index_REST))
+        //     console.log(text.substring(index_REST + len_REST, index_OMS))
+        //     console.log(text.substring(index_OMS + len_OMS))
+            
+        //     // 存储 [REST]
+        //     var restObj = {};
+        //     var rest_str = text.substring(index_REST + len_REST, index_OMS)
+
+        //     var rest_ip = rest_str.substring(rest_str.indexOf("ip =") + "ip =".length);
+        //     var rest_port = rest_str.substring(rest_str.indexOf("port =") + "port =".length, rest_str.indexOf("ip ="))
+
+        //     return {
+        //         rest_ip: rest_ip.trim(),
+        //         rest_port: rest_port.trim()
+        //     };
+        // }
+
+        // 5.
+        function load(name) {
+            let xhr = new XMLHttpRequest(),
+                okStatus = document.location.protocol === "file:" ? 0 : 200;
+            xhr.open('GET', name, false);
+            xhr.overrideMimeType("json/html;charset=utf-8");//默认为utf-8
+            // xhr.overrideMimeType("text/html;charset=utf-8");//默认为utf-8
+            xhr.send(null);
+            return xhr.status === okStatus ? xhr.response : null;
+        }
+
+        var text = load("System.cfg");
+        test = JSON.stringify(text)
+        console.log(text);
+
+
+        var myObj = createObj(text);
+        alert(myObj.rest_ip + ":" + myObj.rest_port)
+        function createObj(text) {
+            // 去掉换行符↵
+            text = text.replace(/[\r\n]/g, " "); 
+            console.log(text);
+            // 查询 [DB] [REST] [OMS] 的索引
+            var index_DB = text.search(/\[DB\]/g);
+            var index_REST = text.search(/\[REST\]/);
+            var index_OMS = text.search(/\[OMS\]/);
+            var len_DB = '[DB]'.length;
+            var len_REST = '[REST]'.length;
+            var len_OMS = '[OMS]'.length;
+            
+            // 存储 [REST]
+            var restObj = {};
+            var rest_str = text.substring(index_REST + len_REST, index_OMS)
+
+            var rest_ip = rest_str.substring(rest_str.indexOf("ip =") + "ip =".length);
+            var rest_port = rest_str.substring(rest_str.indexOf("port =") + "port =".length, rest_str.indexOf("ip ="))
+
+            return {
+                rest_ip: rest_ip.trim(),
+                rest_port: rest_port.trim()
+            };
+        }
+    </script>
+</body>
+
+</html>

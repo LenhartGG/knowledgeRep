@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>deffer</title>
+</head>
+<body>
+    <!-- dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <!-- code -->
+    <h3>通常我们在主题内部来决定什么时候，以及发布什么内容，而不允许在主题之外发布。</h3>
+    <script>
+        // 定义主题
+        var subject = (function(){
+            var dfd = $.Deferred();
+            
+            // 发布内容
+            var task = function(){
+                dfd.resolve('Lenhart')
+            }
+
+            setTimeout(task, 3000);
+
+            return dfd.promise();
+        })();
+
+        // 两个观察者
+        var fn1 = function(content){
+            console.log("fn1: " + content );
+        }
+
+        var fn2 = function(content){
+            console.log("fn2: " + content );
+        }
+
+        // 注册观察者
+        $.when( subject )
+        .done( fn1 )
+        .done( fn2 );
+
+    </script>
+</body>
+</html>

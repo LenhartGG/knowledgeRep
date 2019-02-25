@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.js"></script>
+</head>
+<body>
+    <input id="input" type="text" list="apn">
+    <datalist id="apn">
+    </datalist> 
+    <script>
+        var apn = document.getElementById("apn");
+        var input = document.getElementById("input");
+        input.addEventListener('keydown', function(evt){
+            console.log($(this).val());
+            var options =   '<option value="111"></option>'+
+                            '<option value="112"></option>'+
+                            '<option value="122"></option>'+
+                            '<option value="123"></option>'+
+                            '<option value="132"></option>';
+
+            apn.append(options)
+        })
+    </script>
+</body>
+</html>

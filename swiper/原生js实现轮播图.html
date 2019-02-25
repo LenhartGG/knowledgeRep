@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图</title>
+    <style>
+        /* reset */
+        * {
+            margin:0;
+            padding:0;
+        }
+        a{
+            text-decoration: none;
+        }
+        .swiper-container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            margin:100px auto 0 auto;
+            box-shadow: 0 0 5px green;
+            overflow: hidden;
+        }
+        .wrap {
+            position: absolute;
+            width: 4200px;
+            height: 400px;
+            z-index: 1;
+        }
+        .swiper-container .wrap .swiper-slide {
+            float: left;
+            width: 600px;
+            height: 400px;
+            text-align: center;
+            line-height: 400px;
+        }
+        .swiper-container .buttons {
+            position: absolute;
+            right: 150px;
+            bottom:20px;
+            width: 100px;
+            height: 10px;
+            z-index: 2;
+        }
+        .swiper-container .buttons span {
+            margin-left: 5px;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: green;
+            text-align: center;
+            color:white;
+            cursor: pointer;
+        }
+        .swiper-container .buttons span.on{
+            background-color: red;
+        }
+        .swiper-container .arrow {
+            position: absolute;
+            top: 35%;
+            color: green;
+            padding:0px 14px;
+            border-radius: 50%;
+            font-size: 50px;
+            z-index: 2;
+            display: none;
+        }
+        .swiper-container .arrow_left {
+            left: 10px;
+        }
+        .swiper-container .arrow_right {
+            right: 10px;
+        }
+        .swiper-container:hover .arrow {
+            display: block;
+        }
+        .swiper-container .arrow:hover {
+            background-color: rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="swiper-container">
+        <div class="wrap" style="left:-600px;">
+            <div class="swiper-slide">Slide 1</div>
+            <div class="swiper-slide">Slide 2</div>
+            <div class="swiper-slide">Slide 3</div>
+        </div>
+        <!-- <div class="buttons">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div> -->
+        <a href="javascript:;" class="arrow arrow_left">&lt;</a>
+        <a href="javascript:;" class="arrow arrow_right">&gt;</a>
+    </div>
+</body>
+<script>
+    var wrap = document.querySelector(".wrap");
+        var next = document.querySelector(".arrow_right");
+        var prev = document.querySelector(".arrow_left");
+        var width = parseInt(wrap.children[0].offsetWidth); //'100px' => 
+        var Number = Array.from(wrap.children).length;
+        next.onclick = function () {
+            console.log(wrap.style.left);
+            if(wrap.style.left === '-' + (Number-1) * width +'px'){
+                return;
+            }
+            next_pic();
+        }
+        prev.onclick = function () {
+            console.log(wrap.style.left);
+            if(wrap.style.left === '0px'){
+                return;
+            }
+            prev_pic();
+        }
+        function next_pic () {
+            var newLeft = parseInt(wrap.style.left)-width;
+            wrap.style.left = newLeft + "px";
+        }
+        function prev_pic () {
+            console.log(wrap.style.left);
+            var newLeft = parseInt(wrap.style.left)+width;
+            wrap.style.left = newLeft + "px";
+        }
+</script>
+</html>

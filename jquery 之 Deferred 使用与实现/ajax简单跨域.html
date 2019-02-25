@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+</head>
+<body>
+    <script>
+    // $(document).ready(function(){
+    //     var url = "http://135.252.218.106:18084/e2eroutedisplay/5100?callback=callback()";
+    //     // var url='http://135.252.218.106:18084/paths'
+    //     // var url = './book.json'
+    //     // var url = 'json.json'
+    //     function callback(data){
+    //         console.log(data)
+    //         console.log('callback')
+    //     }
+    //     // url  = 'https://www.baidu.com'
+    //     $.ajax({
+    //         url:url,
+    //         // dataType:'json',
+    //         dataType: 'jsonp',
+    //         crossDomain: true,
+
+    //         success:function(data,textStatus){
+    //             console.log('123')
+    //             console.log(data);
+    //         },
+    //         error:function(XMLHttpRequest, textStatus, errorThrown) {
+    //             console.log('321')
+    //             console.log(XMLHttpRequest)
+    //             console.log(XMLHttpRequest.status);
+    //             console.log(XMLHttpRequest.readyState);
+    //             console.log(textStatus);
+    //         }
+    //     });
+    // });
+    $(function($){
+        // var url = 'http://135.252.218.106:18084/e2eroutedisplay/5100';
+        // // url = 'http://135.252.218.106:18084/paths'
+        var url = 'http://135.252.218.128:4006/login';
+        $.ajax(url, {
+            data: {
+                userName:'hxs',
+                password:'hxs' 
+            },
+            method: 'POST',
+            dataType: 'text',
+            // dataType: 'jsonp',
+            // crossDomain: true,
+            // jsonpCallback:'cb',
+            // // contentType: 
+            success: function(data) {
+                console.log(data)
+                // if(data && data.resultcode == '200'){
+                //     console.log(data);
+                // }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log('321')
+                console.log(XMLHttpRequest)
+                console.log(XMLHttpRequest.status);
+                console.log(XMLHttpRequest.readyState);
+                console.log(textStatus);
+            }
+        });
+    })
+    </script>
+</body>
+</html>

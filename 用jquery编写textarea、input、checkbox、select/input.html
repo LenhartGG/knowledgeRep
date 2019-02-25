@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css" media="screen">
+    body{
+        font : normal 12px/17px Arial;
+    }
+    div{
+        padding :2px;
+    }
+    input,textarea{
+        width : 12em;
+        border :1px solid #888;
+    }
+    .focus{
+        border : 1px solid #f00;
+        background : #fcc;
+    }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8">
+$(function(){
+        $(":input").focus(function(){
+            $(this).addClass("focus");
+            if($(this).val() == this.defaultValue){
+                $(this).val("");
+                    };
+            }).blur(function(){
+                $(this).removeClass("focus");
+                if($(this).val() == ''){
+                    $(this).val(this.defaultValue);
+                    };
+                });
+        //addClass:为每个匹配的元素添加指定的类名，一个或多个用空格分开，添加属性
+        //val():获得或者更改value属性对应的值
+        //defaultValue():获取默认值的value
+        //removeClass():删除对应的class属性
+        });
+    </script>
+</head>
+<body>
+    <form action="" method="post" id="regForm">
+        <fieldset>
+            <legend>个人基本信息</legend>
+            <div>
+                <label  for="username">名称:</label>
+                <input id="username" type="text" value="名称" />
+            </div>
+            <div>
+                <label for="pass">密码:</label>
+                <input id="pass" type="password" value="密码" />
+            </div>
+            <div>
+                <label for="msg">详细信息:</label>
+                <textarea id="msg" rows="2" cols="20">详细信息</textarea>
+            </div>
+        </fieldset>
+    </form>
+</body>
+</html>
