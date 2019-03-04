@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>星星评分</title>
+    <style>
+        @font-face {
+            font-family: 'iconfont';  /* project id 1070048 */
+            src: url('//at.alicdn.com/t/font_1070048_0gxzmhq7cksg.eot');
+            src: url('//at.alicdn.com/t/font_1070048_0gxzmhq7cksg.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_1070048_0gxzmhq7cksg.woff2') format('woff2'),
+            url('//at.alicdn.com/t/font_1070048_0gxzmhq7cksg.woff') format('woff'),
+            url('//at.alicdn.com/t/font_1070048_0gxzmhq7cksg.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_1070048_0gxzmhq7cksg.svg#iconfont') format('svg');
+        }
+        .iconfont{
+            font-family:"iconfont" !important;
+            font-size:16px;font-style:normal;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-stroke-width: 0.2px;
+            -moz-osx-font-smoothing: grayscale;
+            color:blue;
+            font-size: 24px;
+        }
+
+        .ct-star {
+            display: inline-block;
+            margin: 0 1px;
+            width: 19px;
+            height: 19px;
+            /* background: url(img/stars.png) no-repeat; */
+            vertical-align: -2px;
+            cursor: pointer;
+        }
+        .ic-star-off {
+            background-position: -39px 0;
+        }
+    </style>
+</head>
+<body>
+    <p>星星评分中的星星最好使用图片来进行构造，使用svg字体图标的话会导致点击范围略小</p>
+    <span class="star">
+        <b class="ct-star  ic-star-off iconfont">&#xe741;</b>
+        <b class="ct-star  ic-star-off iconfont">&#xe741;</b>
+        <b class="ct-star  ic-star-off iconfont">&#xe741;</b>
+        <b class="ct-star  ic-star-off iconfont">&#xe741;</b>
+        <b class="ct-star  ic-star-off iconfont">&#xe741;</b>
+    </span>
+    <span class="star-txt"></span>
+</body>
+<script>
+        window.onload=function(){
+            var aSpan=document.getElementsByClassName("star")[0];
+            var aStxt=document.getElementsByClassName("star-txt")[0];
+            var aBstar=aSpan.getElementsByTagName("b");
+            // var arrBtxt=["很差","较差","还行","推荐","力荐"];
+            // var arrBtxt=["1","2","3","4","5"];
+            var arrBtxt=[1, 2, 3, 4, 5]
+            var num=0;
+            var onOff=true;
+            for(var i= 0;i<aBstar.length;i++){
+                    aBstar[i].index=i;
+                    //鼠标移入
+                    aBstar[i].onmouseover=function(){
+                        if(onOff) {
+                            num = this.index;
+                            aStxt.innerHTML = arrBtxt[num] + '分';
+                            for (var i = 0; i <=this.index; i++) {
+                                aBstar[i].style.backgroundPosition = "0 0";
+                                aBstar[i].style.color = 'red';
+                            }
+                        }
+                    };
+                    //鼠标移开
+                    aBstar[i].onmouseout=function(){
+                     if(onOff){//设定个开关，等开关为真就执行鼠标移除的代码
+                         aStxt.innerHTML="";
+                         for(var i=0;i<=this.index;i++){
+                             aBstar[i].style.backgroundPosition="-39px 0";
+                            aBstar[i].style.color = 'blue';
+                         }
+                       }
+                     };
+                    //鼠标点击
+                    aBstar[i].onclick=function(){
+                        onOff=false;//开关为假就不执行鼠标移除的代码
+                        //先清空
+                        aStxt.innerHTML="";
+                        for(var i=0;i<aBstar.length;i++){
+                            aBstar[i].style.backgroundPosition="-39px 0";
+                            aBstar[i].style.color = 'blue';
+                        }
+                        //点击当前星星，之前的都点亮包含自己
+                        num = this.index ;
+                        aStxt.innerHTML=arrBtxt[num] + '分';
+                        for(var i=0;i<=this.index;i++){
+                            aBstar[i].style.backgroundPosition="0 0";
+                            aBstar[i].style.color = 'red';
+    
+                        }
+    
+                    };
+                }
+        }
+    
+    </script>
+</html>
