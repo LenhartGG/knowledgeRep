@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>自定义表格</title>
+		<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+				outline: none;
+			}
+			body {
+			    font-size: 12px;
+			    color: #000;
+			    font-family: "微软雅黑";
+			}
+			.digital{
+				width: 65%;
+				margin: 30px auto;
+			}
+			.digitalTitle{
+			    height: 60px;
+    			line-height: 60px;
+			    font-size: 16px;
+			}
+			.CAButtonS{
+				margin: 20px 0;
+			}
+			
+			table.dataTable tbody tr,.reseachIput,#tablesLength>label>select,#tablesPageinate .pageinateBtn{
+			    background: #03152E;
+			}
+			.requestBtn{
+				vertical-align: baseline;
+				margin-left: 16px;
+			}
+			#userImportTable{
+			    background: #003975;
+			    color: #fff;
+			    border: none!important;
+			    text-align: center;
+			    margin: 20px 0;
+			}
+			#userImportTable tr{
+				height: 40px;
+				line-height: 40px;
+			}
+			/*自定义表格格式*/
+			table tbody tr, .reseachIput, #tablesLength>label>select, #tablesPageinate .pageinateBtn{
+				background: #03152E;
+			}
+			.reseachIputCertificate{
+			    height: 40px;
+			    width: 500px;
+			    background: #03152E;
+			    
+			    border-radius: 4px;
+			    border: none;
+			    padding: 0 6px;
+			    color: #fff;
+			}
+			.uploadDigital{
+				/*border: 1px solid red;*/
+			}
+			.uploadDigitalLabel{
+			    /*width: 510px;*/
+    			float: right;
+				
+			}
+			
+			.uploadDigitalInput{
+				width: 300px;
+			    background: #03152E;
+			    border: none;
+			    height: 40px;
+			    border-radius: 4px;
+			    color: #fff;
+			    padding:0 6px;
+			    margin-right: 16px;
+    			vertical-align: middle;
+			}
+			.digitalTop{
+				margin-bottom: 7px;
+			}
+			.userImportTableBottom{
+				/*color: #fff;*/
+			}
+			.userImportTableBottom .dataTablesInfo{
+				float: left;
+				
+			}
+			.userImportTableBottom  .tablePageinate,.userImportTableBottom  .digitalLength{
+				float: right;
+			}
+			.userImportTableBottom  .digitalLength{
+				float: right;
+			    padding-top: 0.25em;
+			    margin-right: 20px;
+			}
+			    
+			.userImportTableBottom  .digitalLength select{
+				background: #03152E;
+			    border: none;
+			    border-radius: 4px;
+			    color: #fff;
+			    margin: 0 4px;
+			    padding: 4px;
+			}
+			.tablePageinate .pageinateBtn.current{
+			    width: 30px;
+			    height: 30px;
+			    font-size: 12px;
+			    background: #0589E0;
+			    text-align: center;
+			    line-height: 30px;
+			    border-radius: 4px;
+			    color: #fff!important;
+			    border: none!important;
+			}
+			#pageNext:hover,#pagePrevious:hover,.tablePageinate .pageinateBtn:hover {
+		    	background: #0589E0;
+		    	cursor: pointer;
+		    }
+		    .tablePageinate .disabled{
+		    	cursor: no-drop!important;
+		    }
+			#pageNext,#pagePrevious,.tablePageinate .pageinateBtn {
+				display: inline-block;
+				width: 30px;
+			    height: 30px;
+			    margin: 0px 2px;
+			    font-size: 12px;
+			    background: #03152E;
+			    text-align: center;
+			    line-height: 30px;
+			    border-radius: 4px;
+			    color: #fff!important;
+			    border: none!important;
+			   
+			}
+			.userImportTableBottom .dataTablesInfo>button{
+				color: #fff;
+			    margin-left: 20px;
+			}
+			.clearBoth{
+				clear: both;
+			}
+			.selectedNumDigital{
+				color: #0589E0;
+    			margin: 0 2px;
+			}
+			
+			.importBtns{
+				text-align: center;
+				margin-top: 20px;
+			}
+			.importBtns>button{
+		    	height: 38px;
+				line-height: 38px;
+    			border: none;
+    			color: #fff;
+    			margin: 0 6px;
+			}
+			.roleSlect{
+			    background: #03152E;
+			    padding: 4px 6px;
+			    border: none;
+			    color: #fff;
+			}
+			.reminder{
+			    font-size: 13px;
+			    text-align: center;
+			    background: #03152E;
+			    height: 40px;
+			    color: #fff;
+			    margin-top: -20px;
+			    margin-bottom: 20px;
+			    line-height: 40px;
+			}
+			/*.showDatas{
+				text-align: center;
+			}*/
+			.showDatasBtn,.checkBtn{
+				background: #0589E0;
+   				border: none;
+			    color: #fff;
+			    padding: 4px 6px ;
+			    border-radius: 4px;
+			    cursor: pointer;
+			    opacity: 0.8;
+			}
+			button:hover{
+			    opacity: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+	    	<div class="digital">
+    			<!-- 中间表格部分  S-->
+				<table width="100%" id="userImportTable" border="0" cellpadding="0" cellspacing="0">
+	                <thead>
+	                    <tr>
+	                    	<th id="userImportAllTd"><input type="checkbox" name="userImportAll"></th>
+	                    	<th>名称</th>
+	                        <th>账号</th>
+	                        <th>角色</th>
+	                        <th>用户组</th>
+	                        <th>号码</th>
+	                        <th>邮箱</th>
+	                        <th>操作</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+			           
+	                </tbody>
+	            </table>
+	            <div class="reminder"><p>没有检索到数据</p></div>
+	            <div class="userImportTableBottom">
+	            	<!--显示已选中数据，可进行批量操作-->
+	            	<div class="dataTablesInfo"  role="status" aria-live="polite">
+	            		<span>已选中<span class="selectedNumImport">0</span>项</span>
+	            	</div>
+	            	<!--显示页码数，前翻页，后翻页，当前页码-->
+	            	<div class=" tablePageinate">
+	            	</div>
+	            	<!--可选择每页暂时数据条数-->
+	            	<div class="digitalLength" >
+	            		<label>每页显示 
+	            			<select name="tablesLength" class="tablesLength" onchange="changePages(this.value)">
+	            				<!--<option value="1">1</option>
+	            				<option value="2">2</option>
+	            				<option value="3">3</option>
+	            				<option value="5">5</option>
+	            				<option value="10">10</option>
+	            				<option value="20">20</option>-->
+	            			</select> 
+	            		</label>
+	            	</div>
+	            	<!--消除浮动效果，防止影响后面的布局-->
+	            	<div class="clearBoth"></div>
+	            </div>
+				<!-- 中间表格部分  E-->
+				<!--展示所选数据的按钮-->
+				<div class="showDatas">
+		    		<button class="showDatasBtn" onclick="showDatas()">展示所选数据</button>
+		    	</div>
+	    	</div>
+	    	
+	    </div>
+	</body>
+	<script>
+		/*模拟数据 S*/
+		var jsonData={
+			"role": [
+				"日志审计员",
+				"运维管理员",
+				"密码保管员",
+				"系统管理员",
+				"操作员"
+			],
+			"status": 1,
+			"mesg": "获取用户信息成功",
+			"data": [
+				{
+					"description": "",
+					"name": "1号报到",
+					"store_dir": "",
+					"email": "",
+					"id": 0,
+					"group": "",
+					"role": "\u7cfb\u7edf\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "Administrator",
+					"department": ""
+				}, {
+					"description": "",
+					"name": "",
+					"store_dir": "",
+					"email": "",
+					"id": 1,
+					"group": "",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "Guest",
+					"department": ""
+				}, {
+					"description": "",
+					"name": "",
+					"store_dir": "",
+					"email": "",
+					"id": 2,
+					"group": "Domain Controllers",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "WIN-80CEFTKIECB$",
+					"department": ""
+				}, {
+					"description": "",
+					"name": "",
+					"store_dir": "",
+					"email": "",
+					"id": 3,
+					"group": "",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "krbtgt",
+					"department": ""
+				}, {
+					"description": "",
+					"name": "三哥",
+					"store_dir": "",
+					"email": "",
+					"id": 4,
+					"group": "\u8f6f\u4ef6\u7814\u53d1\u90e8/WEB\u524d\u7aef",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "lmawful",
+					"department": ""
+				}, {
+					"description": "",
+					"name": "李三",
+					"store_dir": "",
+					"email": "",
+					"id": 5,
+					"group": "\u8f6f\u4ef6\u7814\u53d1\u90e8/WEB\u524d\u7aef",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "jlx",
+					"department": ""
+				}, {
+					"description": "ewqrfadfassadsfasfd",
+					"name": "高级",
+					"store_dir": "",
+					"email": "dadsa@ada.com",
+					"id": 6,
+					"group": "\u8f6f\u4ef6\u7814\u53d1\u90e8/WEB\u524d\u7aef",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "15035125625",
+					"username": "lzm3",
+					"department": "adad123121"
+				}, {
+					"description": "",
+					"name": "成多",
+					"store_dir": "",
+					"email": "",
+					"id": 7,
+					"group": "\u8f6f\u4ef6\u7814\u53d1\u90e8/Python\u540e\u7aef",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "czz",
+					"department": ""
+				}, {
+					"description": "",
+					"name": "宇宇",
+					"store_dir": "",
+					"email": "",
+					"id": 8,
+					"group": "\u8f6f\u4ef6\u7814\u53d1\u90e8/Python\u540e\u7aef",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "lyl",
+					"department": ""
+				}, {
+					"description": "",
+					"name": "久久萨芬",
+					"store_dir": "",
+					"email": "",
+					"id": 9,
+					"group": "\u8f6f\u4ef6\u7814\u53d1\u90e8/\u884c\u8d22\u90e8",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "tl",
+					"department": ""
+				}, {
+					"description": "",
+					"name": "金事",
+					"store_dir": "",
+					"email": "",
+					"id": 10,
+					"group": "\u8f6f\u4ef6\u7814\u53d1\u90e8/Python\u540e\u7aef",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "lxs",
+					"department": ""
+				}, {
+					"description": "",
+					"name": "冯凤凤",
+					"store_dir": "",
+					"email": "",
+					"id": 11,
+					"group": "\u8f6f\u4ef6\u7814\u53d1\u90e8/WEB\u524d\u7aef",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "\u6d4b\u8bd5\u8005\u5e10\u53f7",
+					"department": ""
+				}, {
+					"description": "",
+					"name": "周周洲",
+					"store_dir": "",
+					"email": "",
+					"id": 12,
+					"group": "\u8f6f\u4ef6\u7814\u53d1\u90e8/WEB\u524d\u7aef",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "\u66fe\u6708\u6708",
+					"department": ""
+				}, {
+					"description": "",
+					"name": "而言",
+					"store_dir": "",
+					"email": "",
+					"id": 13,
+					"group": "\u8f6f\u4ef6\u7814\u53d1\u90e8/WEB\u524d\u7aef",
+					"role": "\u8fd0\u7ef4\u7ba1\u7406\u5458",
+					"phone": "",
+					"username": "\u589e\u589e\u589e",
+					"department": ""
+				}
+			]
+		};
+		/*模拟数据 E*/
+		
+		
+		var  backupAataArray=[],//接受接口的数据，避免翻页的时候发送多次请求
+		dataTotalNum=0,//数据总条数
+		tableNum=5,//每一页展示的数据条数
+		filtrateTable=[],//table每次需要展示的数据，受每页展示条数的限制;
+		currentPageNum=1,//当前所在页码;
+		pageFixedNum=6,//初始化定的页码数量
+		dataSet=new Set();//用集合来存储选中的数据
+		var roleSelect=[]//角色下拉框数据;
+		var pagesChoose=[1,2,3,5,10,20];//自定义每页数据显示条数，可修改
+		var setOn=true;
+		/*初始化表格的函数 S*/
+	  	tableInit(jsonData,true,true,true);
+	  	/*初始化表格的函数 E*/
+		/*
+		 * 渲染的table的id 重要，重要。渲染多个table的关键（这个留着我下次再封装吧，突然感觉还要考虑很多东西）
+	  	 * jsonData:数据（这里是使用的固定数据，因为ajax本地跨域的问题，所以没有使用ajax传递数据，项目中，需根据实际环境做出调整）
+	  	 * 每页展示的数据条数,默认为5 可填写的格式为，number true(为默认)
+	  	 * 可修改的每页展示条数，默认为[5,10,20];，填写格式为 array true(为默认)
+	  	 * 是否添加翻页选中效果 此处使用了set集合的形式，避免重合，所以请使用唯一标识来区别 true 默认打开，false 关闭
+	  	 * */
+	  	function tableInit(result,dataNum,pages,setOpen){
+	  		setOn=setOpen;
+	  		if(!dataNum){
+	  			alert("请填写正确的每页展示数据格式！")
+	  		}else{
+	  			if(typeof dataNum == "number"){
+	  				tableNum=dataNum;
+	  			}else{
+	  				tableNum=5;
+	  			}
+	  			/*tableNum=5;*/
+	  		}
+            if(result.status){
+            	if(result.data){
+            		if(result.data.length<=0){
+            			return false;
+            		}
+            		$(".reminder").remove();
+	            	backupAataArray=result.data;
+	            	dataTotalNum=backupAataArray.length;
+	            	if(backupAataArray.length>tableNum){
+	            		filtrateTable=backupAataArray.slice(0,tableNum);
+	            	}else{
+	            		filtrateTable=backupAataArray.slice(0);
+	            	}
+	            }
+            	roleSelect=result.role;
+            }
+            if(pages){
+            	if(pages.length>0){
+            		for(var i in pages){
+            			var optionPage=$('<option value="'+pages[i]+'">'+pages[i]+'</option>');
+            			$(".tablesLength").append(optionPage);
+            		}
+            	}else{
+            		var pages=[5,10,20];
+            		for(var i in pages){
+            			var optionPage=$('<option value="'+pages[i]+'">'+pages[i]+'</option>');
+            			$(".tablesLength").append(optionPage);
+            		}
+            	}
+            }
+           
+            tableCreate();
+            /*创建页码*/
+          	createPages();
+        }
+	  	/*)*/;
+	  	
+	  	
+	  	/*创建table数据*/
+        function tableCreate(){
+        	$("#userImportTable>tbody").html("");
+        	$("#userImportAllTd>input").prop("checked", false);
+        	/*创建table里面的数据结构 td的各项值 S*/
+        	for(var i in filtrateTable){
+            	var trHtml=$("<tr>"+
+			            	"<td class='ceckedImportTd'><input type='checkbox' name='ceckedImport'  value='"+filtrateTable[i].id+"'/></td>"+
+			            	"<td>"+(filtrateTable[i].name||'N/A')+"</td>"+
+			                "<td>"+filtrateTable[i].username+"</td>"+
+			                "<td class='roleTd'><select class='roleSlect' onchange='selectRole("+filtrateTable[i].id+",this.value)'></select></td>"+
+			                "<td>"+(filtrateTable[i].group||'N/A') +"</td>"+
+			                "<td>"+(filtrateTable[i].phone||'N/A')+"</td>"+
+			                "<td>"+(filtrateTable[i].email||'N/A')+"</td>"+
+			               /* "<td>"+(filtrateTable[i].department||'N/A')+"</td>"+*/
+			                "<td><button class='checkBtn' onclick='check(&quot;"+filtrateTable[i].id+"&quot;)'>编辑</button></td>"+
+			            "</tr>");
+	           	//按照集合内容判断现选中的input 翻页保留选中效果
+	           	if(setOn){
+	           		var checkedTdId=trHtml.find(".ceckedImportTd>input").val();
+	        		var checkedFlg="";
+	        		if(dataSet.has(checkedTdId)){
+	        			checkedFlg="checked";
+	        			trHtml.find(".ceckedImportTd>input").prop("checked", true);
+	        		}
+	           	}else{
+	           		dataSet.clear();
+	           		chooseDataNm();
+	           	}
+	            
+        		/*自定义td内容 S*/
+        		//角色下拉框
+			    for(var j in roleSelect){
+			    	var roleOption="";
+			    	if(filtrateTable[i].role==roleSelect[j]){
+			    		roleOption=$("<option value='"+roleSelect[j]+"' selected = 'selected'>"+roleSelect[j]+"</option>");
+			    	}else{
+			    		roleOption=$("<option value='"+roleSelect[j]+"'>"+roleSelect[j]+"</option>");
+			    	}
+			    	trHtml.find(".roleSlect").append(roleOption);
+			    }
+			    /*自定义td内容 E*/
+			    /*添加tr内容到table tbody 中*/
+	            $("#userImportTable>tbody").append(trHtml);
+            }
+        	/*创建table里面的数据结构 td的各项值 E*/
+        	/*判断是否当页全选*/
+    		if($(".ceckedImportTd>input:checked").length==$(".ceckedImportTd>input").length){
+    			//已全选
+    			$("#userImportAllTd>input").prop("checked", true);
+    		}
+    		/*做单选和多选部分*/
+        	/*单选效果*/
+			$(".ceckedImportTd,.ceckedImportTd>input").bind("click",function(e){
+				if(e.target.nodeName.toUpperCase() == 'INPUT'){
+					if($("input[name='ceckedImport']").length == $("input[name='ceckedImport']:checked").length){
+						$("#userImportAllTd>input").prop("checked",true);
+					}else{
+						$("#userImportAllTd>input").prop("checked",false);
+					}
+					if(this.checked){
+				    	dataSet.add($(this).val());
+					}else{
+				    	dataSet.delete($(this).val());
+					}
+					chooseDataNm();
+		 	        e.stopPropagation();
+				}else{
+					var ch = $(this).find('input').prop('checked');
+					if(ch == false){
+						$(this).find('input').prop('checked',true);
+						if($("input[name='ceckedImport']").length == $("input[name='ceckedImport']:checked").length){
+							$("#userImportAllTd>input").prop('checked',true);
+						}else{
+							$("#userImportAllTd>input").prop('checked',false);
+						}
+						dataSet.add($(this).find('input').val());
+					}else{
+						$(this).find('input').prop('checked',false);
+						if($("input[name='ceckedImport']").length == $("input[name='ceckedImport']:checked").length){
+							$("#userImportAllTd>input").prop('checked',true);
+						}else{
+							$("#userImportAllTd>input").prop('checked',false);
+						}
+						dataSet.delete($(this).find('input').val());
+					}
+					chooseDataNm();
+				}
+			});
+			
+			/*全选部分*/
+		  	$("#userImportAllTd,#userImportAllTd>input").click(function(e){
+				if(e.target.nodeName.toUpperCase() == 'INPUT'){
+					console.log("cccccccccccccc");
+					$("input[name='ceckedImport']").prop("checked",this.checked);
+					if(this.checked){
+						$("input[name='ceckedImport']").each(function(index, input) {
+					    	dataSet.add($(input).val());
+					  	})
+					}else{
+						$("input[name='ceckedImport']").each(function(index, input) {
+					    	dataSet.delete($(input).val());
+					  	})
+					}
+					chooseDataNm();
+	     	        e.stopPropagation();
+				}else{
+					var ch = $(this).find('input').prop('checked'); 
+					if(ch == false){
+						$(this).find('input').prop('checked',true);
+						$("input[name='ceckedImport']").prop("checked",true);
+						
+						$("input[name='ceckedImport']").each(function(index, input) {
+					    	dataSet.add($(input).val());
+					  })
+					}else{
+						$(this).find('input').prop('checked',false);
+						$("input[name='ceckedImport']").prop("checked",false);
+						$("input[name='ceckedImport']").each(function(index, input) {
+					    	dataSet.delete($(input).val());
+					 	})
+					}
+					chooseDataNm();
+				}
+				
+			});
+        };
+       
+        /*创建翻页*/
+        function createPages(){
+           	/*批量导入用户翻页效果  需要实际数据支持*/
+    		var pagesNum=Math.ceil(dataTotalNum/tableNum);//计算总页码数
+    		$(".tablePageinate").html("");
+    		var pagesButtons=$('<a class="pageinateBtn previous disabled" aria-controls="userImportTable" pageId="0" tabindex="0" previousPage="0" id="pagePrevious">&lt;</a>'+
+			            		'<span class="pageBtnS">'+
+			            		'</span>'+
+		            		'<a class="pageinateBtn next" aria-controls="userImportTable" pageId="2" tabindex="0" nextPage="'+pagesNum+'" id="pageNext">&gt;</a>')
+    		$(".tablePageinate").append(pagesButtons);
+    		if(pagesNum<=0){
+    			return false;
+    		}
+			var detailPage=$('<a class="pageinateBtn current" aria-controls="userImportTable" pageId="1" tabindex="0">1</a>');
+			$(".tablePageinate").find(".pageBtnS").append(detailPage);
+			
+			
+			//初始化页码，包括当页码是在标准页码pageFixedNum之内的页码数，包括产生省略号的页码效果
+			if(pagesNum>=2&&pagesNum<=pageFixedNum){
+    			for(var num =2;num <= pagesNum;num++){
+	    			var detailPages=$('<a class="pageinateBtn " aria-controls="userImportTable" pageId="'+num+'" tabindex="0">'+num+'</ a>');
+	    			$(".tablePageinate").find(".pageBtnS").append(detailPages);
+	    		}
+    		}
+			if(pagesNum>pageFixedNum){
+				var previousEllipsis=$('<span class="previousEllipsis" hidden="hidden">...</span>');
+				$(".tablePageinate").find(".pageBtnS").append(previousEllipsis);
+				for(var num =2;num <= pageFixedNum-1;num++){
+	    			var detailPages=$('<a class="pageinateBtn " aria-controls="userImportTable" pageId="'+num+'" tabindex="0">'+num+'</ a>');
+	    			$(".tablePageinate").find(".pageBtnS").append(detailPages);
+	    		}
+				for(var num= pageFixedNum;num< pagesNum;num++){
+					
+					var detailPages=$('<a class="pageinateBtn" aria-controls="userImportTable" pageId="'+num+'" tabindex="0" style="display:none">'+num+'</ a>');
+	    			$(".tablePageinate").find(".pageBtnS").append(detailPages);
+				}
+				var nextEllipsis=$('<span class="nextEllipsis">...</span>');
+				$(".tablePageinate").find(".pageBtnS").append(nextEllipsis);
+				var detailPages=$('<a class="pageinateBtn" aria-controls="userImportTable" pageId="'+pagesNum+'" tabindex="0" >'+pagesNum+'</ a>');
+    			$(".tablePageinate").find(".pageBtnS").append(detailPages);
+			};
+			
+			
+			/*翻页效果*/
+			/*前翻页*/
+			$("#pagePrevious").bind("click",function(){
+    			var pageNum=parseInt($(this).attr("pageId"));
+    			/*前翻页禁用效果*/
+    			if(pageNum<=0){
+    				$(this).addClass("disabled");
+    				return false;
+    			}	
+    			if(pageNum>0){
+    				currentPageNum=pageNum;
+    				pageNum--;
+    				$("#pageNext").attr("pageId",pageNum+2).removeClass("disabled");
+    				$(this).attr("pageId",pageNum);
+    				$(".pageBtnS>a").eq(pageNum).addClass("current").siblings().removeClass("current");
+    				/*获取分页数据*/
+	    			filtrateTable=backupAataArray.slice((currentPageNum-1)*tableNum,currentPageNum*tableNum);
+	    			tableCreate();
+    				
+    			}
+    			
+    			
+				/*前翻页适当保留6位页码数，前省略点的消失和后省略点的出现的情况*/
+				if($(".pageBtnS>a").eq(pageNum-1).css("display")=="none" && $(".pageBtnS>a").eq(pageNum-2).css("display")=="none"){
+					$(".pageBtnS>a").eq(pageNum-1).css("display","inline-block")
+				}
+				/*console.log(pageNum);*/
+				if(pageNum<4){
+					$(".previousEllipsis").hide();
+					$(".nextEllipsis").show();
+					
+					for(var i = 1;i<4;i++){
+						$(".pageBtnS>a").eq(i).css("display","inline-block");
+					}
+					for(var i =2;i<pagesNum-4;i++){
+    					$(".pageBtnS>a").eq(pagesNum-i).css("display","none");
+    				}
+					return false;
+				}
+				if(pagesNum-pageNum>3){
+					$(".nextEllipsis").show();
+					for(var i = pageNum+1;i<pagesNum-2;i++){
+						$(".pageBtnS>a").eq(i+1).css("display","none");
+					}
+				}
+    		})
+			/*后翻页*/
+    		$("#pageNext").bind("click",function(){
+    			var pageNum=parseInt($(this).attr("pageId"));
+    			if(pageNum>pagesNum){
+    				$(this).addClass("disabled");
+    				return;
+    			}
+    			if(pageNum<pagesNum+1){
+    				$("#pagePrevious").attr("pageId",pageNum-1).removeClass("disabled");
+    				currentPageNum=pageNum;
+    				pageNum++;
+    				$(this).attr("pageId",pageNum);
+    				$(".pageBtnS>a").remove("current");
+    				$(".pageBtnS>a").eq(pageNum-2).addClass("current").siblings().removeClass("current");
+    				
+    			}
+    			
+    			/*翻页效果产生省略号的延续效果*/
+    			/*翻页数据修改*/
+    			/*判断当前页数数据是否为5条满数据，分别的截取方法*/
+    			
+    			if(currentPageNum*tableNum>dataTotalNum){
+    				filtrateTable=backupAataArray.slice((currentPageNum-1)*tableNum);
+    			}else{
+    				filtrateTable=backupAataArray.slice((currentPageNum-1)*tableNum,currentPageNum*tableNum);
+    			}
+    			tableCreate();
+    			
+    			
+    			
+				/*后翻页的时候 适当保留后五位页码显示，此时后省略号消失。控制前省略号的显示情况，当页码显示数量超过6时，即可产生前省略号*/
+				if($(".pageBtnS>a").eq(pageNum-1).css("display")=="none" && $(".pageBtnS>a").eq(pageNum).css("display")=="none"){
+					$(".pageBtnS>a").eq(pageNum-1).css("display","inline-block");
+				}
+				if(pagesNum-pageNum<2){
+					$(".nextEllipsis").hide();
+					$(".previousEllipsis").show();
+					for(var i = 1;i<5;i++){
+						$(".pageBtnS>a").eq(pagesNum-i).css("display","inline-block");
+					}
+					for(var i =1;i<pagesNum-5;i++){
+    					$(".pageBtnS>a").eq(i).css("display","none");
+    				}
+					return false;
+				}
+				if(pageNum>=6){
+					$(".previousEllipsis").show();
+					for(var i=1;i<pageNum-3;i++){
+						$(".pageBtnS>a").eq(i).css("display","none");
+					}
+				}
+    		})
+    		/*自选页码点击翻页事件*/
+    		$(".pageBtnS .pageinateBtn").bind("click",function(){
+    			var currentPageNum=parseInt($(this).attr("pageId"));
+    			/*控制前省略号显示事件，页码在5和倒数第3时触发事件*/
+    			if(currentPageNum<=5){
+    				$(".previousEllipsis").hide();
+    				$(".nextEllipsis").show();
+    				for(var i =1;i<5;i++){
+    					$(".pageBtnS>a").eq(i).css("display","inline-block");
+    				}
+    				for(var j=5;j<pagesNum-1;j++){
+    					$(".pageBtnS>a").eq(j).css("display","none");
+    				}
+    			}
+    			/*前后翻页省略*/
+    			if(currentPageNum>4&&pagesNum-currentPageNum>=3){
+    				$(".previousEllipsis").show();
+    				$(".nextEllipsis").show();
+    				$(".pageBtnS>a").eq(currentPageNum-2).css("display","inline-block");
+    				$(".pageBtnS>a").eq(currentPageNum).css("display","inline-block");
+    				for(var i =1;i<pageNum-2;i++){
+    					$(".pageBtnS>a").eq(i).css("display","none");
+    				}
+    				for(var j=currentPageNum+1;j<pagesNum-1;j++){
+    					$(".pageBtnS>a").eq(j).css("display","none");
+    				}
+    			}
+    			/*后翻省略*/
+    			if(pagesNum-currentPageNum<4){
+    				$(".nextEllipsis").hide();
+    				$(".previousEllipsis").show();
+    				for(var i =1;i<6;i++){
+    					$(".pageBtnS>a").eq(pagesNum-i).css("display","inline-block");
+    				}
+    				for(var j=1;j<pagesNum-5;j++){
+    					$(".pageBtnS>a").eq(j).css("display","none");
+    				}
+    			}
+    			
+    			
+    			$(".pageBtnS>a").eq(currentPageNum-1).addClass("current").siblings().removeClass("current");
+    			if(currentPageNum*tableNum>dataTotalNum){
+    				filtrateTable=backupAataArray.slice((currentPageNum-1)*tableNum);
+    			}else{
+    				filtrateTable=backupAataArray.slice((currentPageNum-1)*tableNum,currentPageNum*tableNum);
+    			}
+    			$("#pagePrevious").attr("pageId",currentPageNum-1);
+    			$("#pageNext").attr("pageId",currentPageNum+1);
+    			if(currentPageNum-1>0){
+    				$("#pagePrevious").removeClass("disabled");
+    			}
+    			if(currentPageNum+1<pagesNum){
+    				$("#pageNext").removeClass("disabled");
+    			}
+    			tableCreate();
+    		})
+			
+       	}
+	  	
+	  	
+        /*修改角色*/
+        function selectRole(id,value){
+			backupAataArray[id].role=value;
+		}
+	    /*已选多少项目*/
+	    function chooseDataNm(){
+	    	$(".selectedNumImport").html(Array.from(dataSet).length);
+	    }
+	  	/*设置每页显示的条数S*/
+	  	function changePages(pageNum){
+	  		tableNum=pageNum;
+	  		if(backupAataArray.length>tableNum){
+        		filtrateTable=backupAataArray.slice(0,tableNum);
+        	}else{
+        		filtrateTable=backupAataArray.slice(0);
+        	}
+	  		tableCreate();
+	  		createPages();
+	  	}
+	  	/*设置每页显示的条数E*/
+	  	
+	   	/*按钮点击事件E*/
+	   	//获取当前点击数量极其下标 展示获取的数据
+	  	function showDatas(){
+	  		var importArray=Array.from(dataSet);
+	  		
+	  		if(importArray.length<=0){
+	  			alert("未选择数据！")
+	  			return false;
+	  		}
+	  		alert("您选择的数据id为："+importArray+"");
+	  		
+	  	}
+	  	/*编辑按钮*/
+	  	function check(id){
+        	alert("点击id为"+id+"的编辑按钮！");
+       	}
+	</script>
+</html>
